@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="GuideViewDialogStyle" parent="@style/Base.Theme.AppCompat.Light.Dialog">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+</resources>
