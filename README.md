@@ -79,6 +79,27 @@ void onNext()
 
 如果还存在没有显示的引导视图，这个方法会继续显示下一张，否则会关闭弹窗
 
+## 添加依赖
+
+1. 在根目录的build.gradle文件中添加jitpack仓库
+
+   ```groovy
+   allprojects {
+   		repositories {
+   			...
+   			maven { url 'https://jitpack.io' }
+   		}
+   }
+   ```
+
+2. 添加**GuideView**依赖
+
+   ```groovy
+   dependencies {
+   	compile 'com.github.easilycoder:GuideView:0.0.1'
+   }
+   ```
+
 ### 使用示例
 
 ```kotlin
