@@ -1,3 +1,6 @@
+[![](https://jitpack.io/v/easilycoder/GuideView.svg)](https://jitpack.io/#easilycoder/GuideView)
+
+
 # GuideView:基于DialogFragment实现
 
 基于`DialogFragment`实现的引导遮罩浮层视图，具备以下的特性：
