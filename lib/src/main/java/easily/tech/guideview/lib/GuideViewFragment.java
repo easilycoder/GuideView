@@ -103,6 +103,14 @@ public class GuideViewFragment extends DialogFragment {
         }
         GuideView guideView = new GuideView(getContext(), currentBundle);
         wrapClickListener(guideView);
+        guideView.setTargetViewClickListener(new GuideView.TargetViewClickListener() {
+            @Override
+            public void onGuideViewClicked() {
+                if (currentBundle != null && currentBundle.isDismissOnTouchInTargetView()) {
+                    dismiss();
+                }
+            }
+        });
         flContainer.addView(guideView);
         guideView.show();
         currentGuideView = guideView;

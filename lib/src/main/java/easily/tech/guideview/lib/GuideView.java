@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -37,6 +38,11 @@ import static easily.tech.guideview.lib.GuideViewBundle.TransparentOutline.TYPE_
 @SuppressLint("ViewConstructor")
 final class GuideView extends RelativeLayout {
 
+    interface TargetViewClickListener {
+        void onGuideViewClicked();
+    }
+
+
     private boolean hasAddHintView = false;
     public boolean isShowing = false;
     private int[] targetViewLocation = new int[2];
@@ -50,6 +56,7 @@ final class GuideView extends RelativeLayout {
     private Paint transparentPaint;
     private GuideViewBundle bundle;
     private FrameLayout decorView;
+    private TargetViewClickListener targetViewClickListener;
 
     GuideView(Context context, GuideViewBundle bundle) {
         super(context);
@@ -61,6 +68,24 @@ final class GuideView extends RelativeLayout {
         transparentPaint = new Paint();
         backgroundPaint.setColor(bundle.getMaskColor());
         decorView = (FrameLayout) ((Activity) getContext()).getWindow().getDecorView();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (bundle.isTargetViewClickAble() && isTouchOnTargetView(ev)) {
+            // dispatch touch event the the root activity
+            // make the targetView receive the touch event
+            if (getContext() instanceof Activity) {
+                ((Activity) getContext()).dispatchTouchEvent(ev);
+            }
+            if (ev.getAction() == MotionEvent.ACTION_UP) {
+                if (targetViewClickListener != null) {
+                    targetViewClickListener.onGuideViewClicked();
+                }
+            }
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
@@ -103,6 +128,25 @@ final class GuideView extends RelativeLayout {
             }
         }
         canvas.drawBitmap(bitmap, 0, 0, backgroundPaint);
+    }
+
+    private boolean isTouchOnTargetView(MotionEvent ev) {
+        if (bundle == null || bundle.getTargetView() == null) {
+            return false;
+        }
+        int yAxis = (int) ev.getRawY();
+        int xAxis = (int) ev.getRawX();
+        View targetView = bundle.getTargetView();
+        int[] location = new int[2];
+        targetView.getLocationOnScreen(location);
+        int left = location[0];
+        int top = location[1];
+        int right = left + targetView.getMeasuredWidth();
+        int bottom = top + targetView.getMeasuredHeight();
+        if (yAxis >= top && yAxis <= bottom && xAxis >= left && xAxis <= right) {
+            return true;
+        }
+        return false;
     }
 
 
@@ -161,6 +205,10 @@ final class GuideView extends RelativeLayout {
             }
         }
         return false;
+    }
+
+    public void setTargetViewClickListener(TargetViewClickListener targetViewClickListener) {
+        this.targetViewClickListener = targetViewClickListener;
     }
 
     public void show() {

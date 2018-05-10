@@ -115,6 +115,14 @@ public class GuideViewBundle {
         return config.isDismissOnClicked;
     }
 
+    public boolean isTargetViewClickAble() {
+        return config.isTargetViewClickable;
+    }
+
+    public boolean isDismissOnTouchInTargetView() {
+        return config.isDismissOnClickTargetView;
+    }
+
     public static class Builder {
 
         private static int MASK_LAYER_COLOR = 0xd9000000;
@@ -138,6 +146,13 @@ public class GuideViewBundle {
         private boolean hasTransparentLayer = true;
         // whether click the whole screen can dismissed the guideView.If false,you need to handle the click and dismiss event yourself
         private boolean isDismissOnClicked = true;
+
+
+        private boolean isDismissOnClickTargetView=true;
+
+        private boolean isTargetViewClickable;
+
+
         private int hintViewDirection;
 
         private int outlineType = TYPE_OVAL;
@@ -198,6 +213,17 @@ public class GuideViewBundle {
             this.maskColor = maskColor;
             return this;
         }
+
+        public Builder setTargetViewClickable(boolean targetViewClickAble) {
+            isTargetViewClickable = targetViewClickAble;
+            return this;
+        }
+
+        public Builder setDismissOnTouchInTargetView(boolean dismissOnTouchInTargetView) {
+            isDismissOnClickTargetView = dismissOnTouchInTargetView;
+            return this;
+        }
+
 
         public GuideViewBundle build() {
             return new GuideViewBundle(this);

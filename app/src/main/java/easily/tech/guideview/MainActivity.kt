@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.RelativeLayout
+import android.widget.Toast
 import easily.tech.guideview.lib.GuideViewBundle
 import easily.tech.guideview.lib.GuideViewBundle.Direction.*
 import easily.tech.guideview.lib.GuideViewBundle.TransparentOutline.TYPE_OVAL
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         val hintViewRight: View = View.inflate(this, R.layout.guideview_right, null)
         val hintViewBottom: View = View.inflate(this, R.layout.guideview_bottom, null)
 
+        tvContent.setOnClickListener {
+            Toast.makeText(this, "target view is clicked", Toast.LENGTH_SHORT).show()
+        }
+
         hintViewLeft.tvLeftNext.setOnClickListener {
             guideViewFragment.onNext()
         }
@@ -54,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                             .setHintViewMargin(0, -160, 0, 0)
                             .setTransparentSpace(space, space, space, space)
                             .setOutlineType(TYPE_RECT)
+                            .setTargetViewClickable(true)
                             .setHintViewParams(params)
                             .setHintViewDirection(LEFT).build())
                     .addGuidViewBundle(GuideViewBundle.Builder()
