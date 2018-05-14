@@ -36,6 +36,11 @@ public class GuideViewBundle {
         int BOTTOM = 0x0004;
     }
 
+    public interface GuideViewHideListener {
+        void onGuideViewHide();
+    }
+
+
     /**
      * Transparent focus area outline type
      */
@@ -123,6 +128,14 @@ public class GuideViewBundle {
         return config.isDismissOnClickTargetView;
     }
 
+    public boolean condition() {
+        return config.condition;
+    }
+
+    public GuideViewHideListener getGuideViewHideListener() {
+        return config.guideViewHideListener;
+    }
+
     public static class Builder {
 
         private static int MASK_LAYER_COLOR = 0xd9000000;
@@ -146,6 +159,11 @@ public class GuideViewBundle {
         private boolean hasTransparentLayer = true;
         // whether click the whole screen can dismissed the guideView.If false,you need to handle the click and dismiss event yourself
         private boolean isDismissOnClicked = true;
+
+        // set a condition,whether the added GuideViewBundle can be shown,default is true
+        private boolean condition = true;
+
+        private GuideViewHideListener guideViewHideListener;
 
 
         private boolean isDismissOnClickTargetView=true;
@@ -221,6 +239,18 @@ public class GuideViewBundle {
 
         public Builder setDismissOnTouchInTargetView(boolean dismissOnTouchInTargetView) {
             isDismissOnClickTargetView = dismissOnTouchInTargetView;
+            return this;
+        }
+
+
+
+        public Builder condition(boolean condition) {
+            this.condition = condition;
+            return this;
+        }
+
+        public Builder setGuideViewHideListener(GuideViewHideListener guideViewHideListener) {
+            this.guideViewHideListener = guideViewHideListener;
             return this;
         }
 

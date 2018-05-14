@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                             .setTargetView(tvContent)
                             .setHintView(hintViewLeft)
                             .setDismissOnClicked(false)
+                            .condition(false)
                             .setHintViewMargin(0, -160, 0, 0)
                             .setTransparentSpace(space, space, space, space)
                             .setOutlineType(TYPE_RECT)
@@ -68,6 +69,9 @@ class MainActivity : AppCompatActivity() {
                             .setHintView(hintViewTop)
                             .setDismissOnClicked(false)
                             .setHintViewParams(params)
+                            .setGuideViewHideListener {
+                                Toast.makeText(this,"dismissed",Toast.LENGTH_SHORT).show()
+                            }
                             .setHintViewMargin(-dp2px(this, 55f), 0, 0, 0)
                             .setTransparentSpace(space, space, space, space)
                             .setHintViewDirection(TOP)

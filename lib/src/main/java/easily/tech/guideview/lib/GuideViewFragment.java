@@ -91,12 +91,15 @@ public class GuideViewFragment extends DialogFragment {
             flContainer.setBackgroundColor(currentBundle == null ? Color.TRANSPARENT : currentBundle.getMaskColor());
             currentGuideView.hide();
         }
-        // if there is no available guideView,just dismiss the whole dialogFragment
-        if (guideViewBundles == null || guideViewBundles.isEmpty()) {
-            dismiss();
-            return;
-        }
-        currentBundle = guideViewBundles.remove(0);
+        // loop to get the available guideView bundle data
+        do {
+            if (guideViewBundles == null || guideViewBundles.isEmpty()) {
+                currentBundle = null;
+            } else {
+                currentBundle = guideViewBundles.remove(0);
+            }
+        } while (currentBundle != null && !currentBundle.condition());
+
         if (currentBundle == null) {
             dismiss();
             return;
@@ -107,7 +110,7 @@ public class GuideViewFragment extends DialogFragment {
             @Override
             public void onGuideViewClicked() {
                 if (currentBundle != null && currentBundle.isDismissOnTouchInTargetView()) {
-                    dismiss();
+                    onNext();
                 }
             }
         });

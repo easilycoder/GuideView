@@ -244,5 +244,8 @@ final class GuideView extends RelativeLayout {
         if (getParent() != null && getParent() instanceof ViewGroup) {
             ((ViewGroup) getParent()).removeView(this);
         }
+        if (bundle != null && bundle.getGuideViewHideListener() != null) {
+            bundle.getGuideViewHideListener().onGuideViewHide();
+        }
     }
 }
