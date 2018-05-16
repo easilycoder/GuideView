@@ -30,6 +30,7 @@ public class GuideViewFragment extends DialogFragment {
     private FrameLayout flContainer;
     private GuideViewBundle currentBundle;
     private GuideView currentGuideView;
+    private boolean isShowing;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +55,10 @@ public class GuideViewFragment extends DialogFragment {
         }
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        showGuideView();
+        if (!isShowing){
+            isShowing=true;
+            showGuideView();
+        }
     }
 
     public void setGuideViewBundles(List<GuideViewBundle> guideViewBundles) {
@@ -139,6 +143,7 @@ public class GuideViewFragment extends DialogFragment {
                 currentBundle = null;
                 currentGuideView = null;
             }
+            isShowing=false;
             super.dismiss();
         }
     }
