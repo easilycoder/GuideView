@@ -1,5 +1,29 @@
 [![](https://jitpack.io/v/easilycoder/GuideView.svg)](https://jitpack.io/#easilycoder/GuideView)
 
+# FEATURE UPDATE
+
+* 在显示引导图的情况下，targetView可以设置支持点击。在这种情况下，dialogFragment的事件会被透传到targetView上，触发其原有的点击逻辑；
+
+  ```Java
+  // 设置targetView是否可以接受点击事件
+  GuideViewBundle.Builder#setTargetViewClickable();
+  //设置targetView点击之后是否展示下一页的引导视图（如果没有下一页则关闭整个引导视图）
+  GuideViewBundle.Builder#setDismissOnTouchInTargetView();
+  ```
+
+* 支持设置GuideView(即每一页的引导视图)关闭的监听；
+
+  ```Java
+  GuideViewBundle.Builder#setGuideViewHideListener();
+  ```
+
+* 支持设定显示条件的布尔值，方便链式调用API
+
+  ```java
+  // 如果传入的condition值为false，那么即使对应的GuideViewBundle被add进GuideViewFragment中也不会被显示
+  GuideViewBundle.Builder#condition(condition)
+  ```
+
 
 # GuideView:基于DialogFragment实现
 
